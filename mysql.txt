@@ -1,0 +1,32 @@
+CREATE TABLE postac(id_postaci INT PRIMARY KEY, nazwa VARCHAR(40), rodzaj ENUM('wiking','ptak','kobieta'), data_ur DATE NOT NULL, wiek INT UNSIGNED);
+INSERT INTO postac VALUES(1, 'Bjorn','wiking','1970-02-10','51');
+INSERT INTO postac VALUES(2, 'Drozd','ptak','2017-07-09','7');
+INSERT INTO postac VALUES(3, 'Tesciowa','kobieta','1941-10-01','80');
+UPDATE postac SET wiek='88' WHERE id_postaci='3';
+
+
+CREATE TABLE walizka(id_walizki INT PRIMARY KEY AUTO_INCREMENT, pojemnosc INT UNSIGNED, kolor ENUM('rozowy','czerwony','teczowy','zolty'), id_wlasciciela INT, FOREIGN KEY (id_wlasciciela) REFERENCES postac(id_postaci));
+INSERT INTO walizka VALUES (1,'6','zolty', '1');
+INSERT INTO walizka VALUES (2,'12','teczowy', '2');
+UPDATE walizka SET kolor='rozowy';
+
+
+CREATE TABLE izba(adres_budynku VARCHAR(40), nazwa_izby VARCHAR(40), metraz INT UNSIGNED,wlasciciel INT, FOREIGN KEY (wlasciciel) REFERENCES postac(id_postaci), PRIMARY KEY(adres_budynku, nazwa_izby));
+ALTER TABLE izba ADD kolor VARCHAR(40) DEFAULT ('czarny');
+INSERT INTO izba(adres_budynku, nazwa_izby, metraz, kolor, wlasciciel) VALUES ('Wrzosowa_7','spizarnia','9','szary','1');
+
+CREATE TABLE przetwory(id_przetworu INT PRIMARY KEY, rok_produkcji YEAR DEFAULT '1954',id_wykonawcy INT,
+zawartosc VARCHAR(200), dodatek VARCHAR(200) DEFAULT 'papryczka_chilli', id_konsumenta INT, FOREIGN KEY (id_wykonawcy) REFERENCES postac(id_postaci), FOREIGN KEY(id_konsumenta) REFERENCES postac(id_postaci));
+INSERT INTO przetwory VALUES('1','1978','1','kapusta,ketchup,cebula,pieprz','sol','3');
+
+INSERT INTO postac VALUES(4, 'Waldemar','wiking','1996-01-30','26');
+INSERT INTO postac VALUES(5, 'Wies³aw','wiking','1991-05-05','30');
+INSERT INTO postac VALUES(6, 'Wojciech','wiking','1998-06-27','23');
+INSERT INTO postac VALUES(7, 'Wiktor','wiking','1999-05-13','22');
+INSERT INTO postac VALUES(8, 'W³adys³aw','wiking','1990-12-11','31');
+
+CREATE TABLE statek(nazwa_statku INT PRIMARY KEY, rodzaj_statku ENUM(‘handlowy’,’pasa¿erski’,‘zaopatrzenia’),data_wodowania DATE, max_ladownosc INT UNSIGNED);
+INSERT INTO statek(nazwa statku) VALUES (‘Mewa’,’Pelikan’);
+ALTER TABLE postac ADD funkcja VARCHAR(60);
+INSERT INTO postac(funkcja) VALUES (‘kapitan’)
+ALTER TABLE postac ADD FOREIGN KEY (funkcja) REFERENCES statek (nazwa_statku);
