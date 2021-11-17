@@ -20,13 +20,28 @@ zawartosc VARCHAR(200), dodatek VARCHAR(200) DEFAULT 'papryczka_chilli', id_kons
 INSERT INTO przetwory VALUES('1','1978','1','kapusta,ketchup,cebula,pieprz','sol','3');
 
 INSERT INTO postac VALUES(4, 'Waldemar','wiking','1996-01-30','26');
-INSERT INTO postac VALUES(5, 'Wies³aw','wiking','1991-05-05','30');
+INSERT INTO postac VALUES(5, 'Wiesaw','wiking','1991-05-05','30');
 INSERT INTO postac VALUES(6, 'Wojciech','wiking','1998-06-27','23');
 INSERT INTO postac VALUES(7, 'Wiktor','wiking','1999-05-13','22');
-INSERT INTO postac VALUES(8, 'W³adys³aw','wiking','1990-12-11','31');
+INSERT INTO postac VALUES(8, 'Wadysaw','wiking','1990-12-11','31');
 
-CREATE TABLE statek(nazwa_statku INT PRIMARY KEY, rodzaj_statku ENUM(‘handlowy’,’pasa¿erski’,‘zaopatrzenia’),data_wodowania DATE, max_ladownosc INT UNSIGNED);
-INSERT INTO statek(nazwa statku) VALUES (‘Mewa’,’Pelikan’);
+CREATE TABLE statek (nazwa_statku VARCHAR(40) NOT NULL  PRIMARY KEY, 
+rodzaj ENUM('handlowy','wojenny','pasazerski','zaopatrzenia'),
+data_wodowania DATE NOT NULL,
+max_ladownosc INT NOT NULL);
+INSERT INTO statek VALUES (â€˜â€™Pelikanâ€™,â€™zaopatrzeniaâ€™,â€™2021-12-24â€™,â€™300â€™);
+INSERT INTO statek VALUES (â€˜Mewaâ€™,â€™wojennyâ€™,â€™2021-12-30â€™,â€™100â€™)
 ALTER TABLE postac ADD funkcja VARCHAR(60);
-INSERT INTO postac(funkcja) VALUES (‘kapitan’)
+INSERT INTO postac(funkcja) VALUES (â€˜kapitanâ€™)
 ALTER TABLE postac ADD FOREIGN KEY (funkcja) REFERENCES statek (nazwa_statku);
+
+REFERENCES postac (id_postaci);
+ALTER TABLE przetwory DROP FOREIGN KEY id_konsumenta;
+ALTER TABLE postac
+DROP PRIMARY KEY;
+
+ALTER TABLE postac ADD pesel VARCHAR(11) PRIMARY KEY;
+ALTER TABLE postac MODIFY rodzaj ENUM('wiking','ptak','kobieta','syrena');
+INSERT INTO postac VALUES(9,'Gertruda Nieszczera','syrena','2000-01-01','21','02249286341');
+
+
